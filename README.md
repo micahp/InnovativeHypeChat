@@ -20,7 +20,7 @@ InnovativeHypeChat is a customized AI chat application based on LibreChat, focus
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
-- An [OpenRouter](https://openrouter.ai/) API key for accessing free models
+- (Optional) An [OpenRouter](https://openrouter.ai/) API key is not needed to access free models. Add an API key to access OpenRouter's paid models
 
 ### Installation
 
@@ -35,7 +35,7 @@ InnovativeHypeChat is a customized AI chat application based on LibreChat, focus
    cp .env.example .env
    ```
    
-3. **Update your .env file with your OpenRouter API key**
+3. **(Optional) Update your .env file with your OpenRouter API key**
    ```
    OPENROUTER_API_KEY=your_api_key_here
    ```
