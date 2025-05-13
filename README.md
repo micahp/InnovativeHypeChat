@@ -54,30 +54,6 @@ InnovativeHypeChat is a customized AI chat application based on LibreChat, focus
    
    Open your browser and navigate to [http://localhost:3080](http://localhost:3080)
 
-## 🔧 Building Your Own Docker Image
-
-If you want to build and use your own Docker image:
-
-1. **Update the Docker Hub username in build-and-push.sh**
-   ```bash
-   nano build-and-push.sh
-   ```
-
-2. **Make the build script executable**
-   ```bash
-   chmod +x build-and-push.sh
-   ```
-
-3. **Build and push your Docker image**
-   ```bash
-   ./build-and-push.sh
-   ```
-
-4. **Update docker-compose.override.yml with your Docker image**
-   ```bash
-   nano docker-compose.override.yml
-   ```
-
 ## 🌟 Features
 
 InnovativeHypeChat includes all the powerful features of LibreChat plus:

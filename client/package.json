@@ -1,5 +1,5 @@
 {
-  "name": "@innovative-hype-chat/frontend",
+  "name": "innovative-hype-gpt",
   "version": "v1.0.0",
   "description": "Enhanced ChatGPT Clone Focused On Free Models: Features Agents, DeepSeek, Anthropic, AWS, OpenAI, Assistants API, Azure, Groq, o1, GPT-4o, Mistral, OpenRouter, Vertex AI, Gemini, Artifacts, AI model switching, message search, Code Interpreter, langchain, DALL-E-3, OpenAPI Actions, Functions, Secure Multi-User Auth, Presets, open-source for self-hosting.",
   "type": "module",

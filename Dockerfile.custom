@@ -21,7 +21,7 @@ COPY client/package*.json ./client/
 # Install all dependencies for every build
 FROM base-min AS base
 WORKDIR /app
-RUN npm ci
+RUN npm install
 
 # Build data-provider
 FROM base AS data-provider-build
