@@ -102,9 +102,16 @@ fi
 # Update Footer.tsx to replace LibreChat with Innovative Hype Chat
 echo "✏️ Updating Footer.tsx..."
 if docker exec $CONTAINER_NAME test -f $FOOTER_PATH; then
-  # Using perl for more complex regex replacement that works across multiple lines
-  docker exec $CONTAINER_NAME bash -c "perl -i -pe 's/\[LibreChat (\+\s+Constants\.VERSION \+)/\[$FOOTER_TITLE \1/g' $FOOTER_PATH"
-  echo "- ✅ Updated LibreChat reference in Footer.tsx"
+  # Using sh instead of bash for compatibility with minimal containers
+  docker exec $CONTAINER_NAME sh -c "perl -i -pe 's/\[LibreChat (\+\s+Constants\.VERSION \+)/\[$FOOTER_TITLE \1/g' $FOOTER_PATH"
+  
+  # Check if the command was successful
+  if [ $? -eq 0 ]; then
+    echo "- ✅ Updated LibreChat reference in Footer.tsx"
+  else
+    echo "- ❌ Failed to update Footer.tsx"
+    FAILED_COUNT=$((FAILED_COUNT+1))
+  fi
 else
   echo "- ⚠️ Footer.tsx not found at $FOOTER_PATH"
   FAILED_COUNT=$((FAILED_COUNT+1))
