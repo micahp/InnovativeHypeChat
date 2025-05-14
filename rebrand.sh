@@ -4,8 +4,8 @@
 CONTAINER_NAME="LibreChat"
 TITLE="Innovative Hype"
 
-# Asset source paths (from your local machine)
-BASE_PATH="~/InnovativeHypeChat"
+# Use $HOME instead of ~ for proper expansion
+BASE_PATH="$HOME/InnovativeHypeChat"
 ASSETS_SRC="$BASE_PATH/client/public/assets"
 
 # Target paths in the container
@@ -31,6 +31,9 @@ docker exec $CONTAINER_NAME mkdir -p $PUBLIC_DIR/assets
 docker exec $CONTAINER_NAME mkdir -p $DIST_DIR/assets
 
 echo "📂 Copying all branding assets to container..."
+
+# Debug: Show actual path being used
+echo "Looking for assets in: $ASSETS_SRC"
 
 # List of assets to copy
 ASSETS=(
