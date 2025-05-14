@@ -12,14 +12,22 @@ VERSION="1.0.0"
 echo "Logging in to Docker Hub..."
 docker login
 
-# Build the main API image
-echo "Building main API image..."
-docker build -t $DOCKER_USERNAME/$APP_NAME:$VERSION -t $DOCKER_USERNAME/$APP_NAME:latest -f Dockerfile.custom --target api-build .
+# Build the main application image (contains both backend API and client build)
+echo "Building main application image..."
+docker build -t $DOCKER_USERNAME/$APP_NAME:$VERSION -t $DOCKER_USERNAME/$APP_NAME:latest -f Dockerfile.custom .
 
-# Push the main API image
-echo "Pushing main API image..."
+# Push the main application image
+echo "Pushing main application image..."
 docker push $DOCKER_USERNAME/$APP_NAME:$VERSION
 docker push $DOCKER_USERNAME/$APP_NAME:latest
+
+# Build the optional frontend-only image (nginx)
+# echo "Building frontend-only image..."
+# docker build -f Dockerfile.custom --target nginx-client -t $DOCKER_USERNAME/$APP_NAME-client:$VERSION -t $DOCKER_USERNAME/$APP_NAME-client:latest .
+
+# echo "Pushing frontend-only image..."
+# docker push $DOCKER_USERNAME/$APP_NAME-client:$VERSION
+# docker push $DOCKER_USERNAME/$APP_NAME-client:latest
 
 # If you want to build the RAG API image too, uncomment these lines
 # echo "Building RAG API image..."

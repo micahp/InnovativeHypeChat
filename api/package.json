@@ -1,9 +1,11 @@
 {
-  "name": "@librechat/backend",
-  "version": "v0.7.8",
-  "description": "",
+  "name": "innovative-hype-chat-api",
+  "version": "1.0.0",
+  "description": "Backend API for InnovativeHypeChat",
+  "main": "server/index.js",
   "scripts": {
-    "start": "echo 'please run this from the root directory'",
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
     "server-dev": "echo 'please run this from the root directory'",
     "test": "cross-env NODE_ENV=test jest",
     "b:test": "NODE_ENV=test bun jest",
@@ -24,7 +26,9 @@
   "author": "",
   "license": "ISC",
   "_moduleAliases": {
-    "~": "."
+    "@root": ".",
+    "@config": "../config",
+    "@utils": "./utils"
   },
   "imports": {
     "~/*": "./*"
