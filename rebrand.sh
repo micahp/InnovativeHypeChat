@@ -102,19 +102,29 @@ fi
 # Update Footer.tsx to replace LibreChat with Innovative Hype Chat
 echo "✏️ Updating Footer.tsx..."
 if docker exec $CONTAINER_NAME test -f $FOOTER_PATH; then
-  # First attempt: Using basic sed
-  if docker exec $CONTAINER_NAME sed -i "s/\[LibreChat /\[$FOOTER_TITLE /g" $FOOTER_PATH; then
-    echo "- ✅ Updated LibreChat reference in Footer.tsx using sed"
-  else
-    echo "- ⚠️ sed failed, trying alternative approach with grep and echo"
+  # Extract the file from container to host for processing
+  TMP_FOOTER="$BASE_PATH/tmp_footer.tsx"
+  
+  # Copy the file from container to host
+  docker cp "$CONTAINER_NAME:$FOOTER_PATH" "$TMP_FOOTER"
+  
+  if [ -f "$TMP_FOOTER" ]; then
+    # Target the correct markdown pattern in the source code
+    # The original pattern is: '[LibreChat ' + Constants.VERSION + '](https://librechat.ai)'
+    sed -i "s|\[LibreChat \' +|\[$FOOTER_TITLE \' +|g" "$TMP_FOOTER"
+    sed -i "s|https://librechat.ai|#|g" "$TMP_FOOTER"
     
-    # Create a temporary file in the container for the replacement
-    if docker exec $CONTAINER_NAME sh -c "grep -v '\[LibreChat ' $FOOTER_PATH > /tmp/footer.tmp && grep '\[LibreChat ' $FOOTER_PATH | sed 's/\[LibreChat /\[$FOOTER_TITLE /g' >> /tmp/footer.tmp && cat /tmp/footer.tmp > $FOOTER_PATH"; then
-      echo "- ✅ Updated LibreChat reference in Footer.tsx using grep/echo fallback"
+    # Copy the modified file back to the container
+    if docker cp "$TMP_FOOTER" "$CONTAINER_NAME:$FOOTER_PATH"; then
+      echo "- ✅ Updated Footer.tsx successfully"
+      rm "$TMP_FOOTER"
     else
-      echo "- ❌ Failed to update Footer.tsx"
+      echo "- ❌ Failed to copy modified file back to container"
       FAILED_COUNT=$((FAILED_COUNT+1))
     fi
+  else
+    echo "- ❌ Failed to copy Footer.tsx from container"
+    FAILED_COUNT=$((FAILED_COUNT+1))
   fi
 else
   echo "- ⚠️ Footer.tsx not found at $FOOTER_PATH"
