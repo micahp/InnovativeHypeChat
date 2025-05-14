@@ -6,7 +6,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if [ ! -f "./rebrand.sh" ]; then
+if [ ! -f "$HOME/InnovativeHypeChat/rebrand.sh" ]; then
     echo "Error: rebrand.sh script not found" >&2
     exit 1
 fi
@@ -40,7 +40,7 @@ fi
 
 # Run rebrand script
 echo "Running rebrand script..."
-if ! ./rebrand.sh; then
+if ! "$HOME/InnovativeHypeChat/rebrand.sh"; then
     echo "Warning: Rebrand script failed or completed with errors" >&2
 fi
 
