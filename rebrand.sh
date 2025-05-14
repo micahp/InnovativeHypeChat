@@ -102,15 +102,19 @@ fi
 # Update Footer.tsx to replace LibreChat with Innovative Hype Chat
 echo "✏️ Updating Footer.tsx..."
 if docker exec $CONTAINER_NAME test -f $FOOTER_PATH; then
-  # Using basic sed instead of perl - should work in minimal containers
-  docker exec $CONTAINER_NAME sed -i "s/\[LibreChat /\[$FOOTER_TITLE /g" $FOOTER_PATH
-  
-  # Check if the command was successful
-  if [ $? -eq 0 ]; then
-    echo "- ✅ Updated LibreChat reference in Footer.tsx"
+  # First attempt: Using basic sed
+  if docker exec $CONTAINER_NAME sed -i "s/\[LibreChat /\[$FOOTER_TITLE /g" $FOOTER_PATH; then
+    echo "- ✅ Updated LibreChat reference in Footer.tsx using sed"
   else
-    echo "- ❌ Failed to update Footer.tsx"
-    FAILED_COUNT=$((FAILED_COUNT+1))
+    echo "- ⚠️ sed failed, trying alternative approach with grep and echo"
+    
+    # Create a temporary file in the container for the replacement
+    if docker exec $CONTAINER_NAME sh -c "grep -v '\[LibreChat ' $FOOTER_PATH > /tmp/footer.tmp && grep '\[LibreChat ' $FOOTER_PATH | sed 's/\[LibreChat /\[$FOOTER_TITLE /g' >> /tmp/footer.tmp && cat /tmp/footer.tmp > $FOOTER_PATH"; then
+      echo "- ✅ Updated LibreChat reference in Footer.tsx using grep/echo fallback"
+    else
+      echo "- ❌ Failed to update Footer.tsx"
+      FAILED_COUNT=$((FAILED_COUNT+1))
+    fi
   fi
 else
   echo "- ⚠️ Footer.tsx not found at $FOOTER_PATH"
