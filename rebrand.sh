@@ -3,6 +3,7 @@
 # Configuration
 CONTAINER_NAME="LibreChat"
 TITLE="Innovative Hype"
+FOOTER_TITLE="Innovative Hype Chat"
 
 # Use $HOME instead of ~ for proper expansion
 BASE_PATH="$HOME/InnovativeHypeChat"
@@ -11,6 +12,7 @@ ASSETS_SRC="$BASE_PATH/client/public/assets"
 # Target paths in the container
 PUBLIC_DIR="/app/client/public"
 DIST_DIR="/app/client/dist"
+FOOTER_PATH="/app/client/src/components/Chat/Footer.tsx"
 
 # Check if container is running
 if ! docker ps --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
@@ -97,6 +99,17 @@ if [ "$TITLE_UPDATED" = false ]; then
   echo "- ⚠️ No index.html files found to update title"
 fi
 
+# Update Footer.tsx to replace LibreChat with Innovative Hype Chat
+echo "✏️ Updating Footer.tsx..."
+if docker exec $CONTAINER_NAME test -f $FOOTER_PATH; then
+  # Using perl for more complex regex replacement that works across multiple lines
+  docker exec $CONTAINER_NAME bash -c "perl -i -pe 's/\[LibreChat (\+\s+Constants\.VERSION \+)/\[$FOOTER_TITLE \1/g' $FOOTER_PATH"
+  echo "- ✅ Updated LibreChat reference in Footer.tsx"
+else
+  echo "- ⚠️ Footer.tsx not found at $FOOTER_PATH"
+  FAILED_COUNT=$((FAILED_COUNT+1))
+fi
+
 # Summary
 echo ""
 echo "📋 Summary:"
@@ -105,3 +118,4 @@ echo "- $FAILED_COUNT files failed or skipped"
 echo ""
 echo "✨ Branding update for Innovative Hype Chat is complete."
 echo "🔄 You may need to refresh or clear your browser cache to see the changes."
+echo "⚠️ You might need to rebuild the application for Footer.tsx changes to take effect."
