@@ -102,8 +102,8 @@ fi
 # Update Footer.tsx to replace LibreChat with Innovative Hype Chat
 echo "✏️ Updating Footer.tsx..."
 if docker exec $CONTAINER_NAME test -f $FOOTER_PATH; then
-  # Using sh instead of bash for compatibility with minimal containers
-  docker exec $CONTAINER_NAME sh -c "perl -i -pe 's/\[LibreChat (\+\s+Constants\.VERSION \+)/\[$FOOTER_TITLE \1/g' $FOOTER_PATH"
+  # Using basic sed instead of perl - should work in minimal containers
+  docker exec $CONTAINER_NAME sed -i "s/\[LibreChat /\[$FOOTER_TITLE /g" $FOOTER_PATH
   
   # Check if the command was successful
   if [ $? -eq 0 ]; then
