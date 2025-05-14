@@ -43,9 +43,16 @@ EXPOSE 3080
 ENV HOST=0.0.0.0
 ENV PORT=3080
 ENV NODE_ENV=production
+ENV NODE_PATH=/app
 
 # Use the module-alias setup file before starting the server
 CMD ["node", "-r", "/app/module-alias-setup.js", "api/server/index.js"]
+
+# Install module-alias at the correct location
+RUN npm install --save module-alias
+
+# Ensure proper module paths
+COPY jsconfig.json /app/jsconfig.json
 
 # Optional: for client with nginx routing
 # FROM nginx:stable-alpine AS nginx-client

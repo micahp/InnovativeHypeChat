@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
-require('module-alias')({ base: path.resolve(__dirname, '..') });
+// Module aliases are now set up in module-alias-setup.js which is loaded with -r flag
+
 const cors = require('cors');
 const axios = require('axios');
 const express = require('express');
