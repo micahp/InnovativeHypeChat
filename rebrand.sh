@@ -261,3 +261,7 @@ echo ""
 echo "✨ Branding update for Innovative Hype Chat is complete."
 echo "🔄 You may need to refresh or clear your browser cache to see the changes."
 echo "⚠️ You might need to rebuild the application for Footer.tsx changes to take effect."
+
+# Add after footer modifications:
+echo "🔄 Rebuilding the frontend application..."
+docker exec $CONTAINER_NAME sh -c "cd /app && npm run frontend"
