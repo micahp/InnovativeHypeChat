@@ -13,7 +13,7 @@
 
 # InnovativeHypeChat
 
-InnovativeHypeChat is a customized AI chat application based on LibreChat, focused on providing free AI models through OpenRouter and document search capabilities through Ollama RAG.
+**InnovativeHypeChat** is a *whitelabel-ready* fork of LibreChat. Run your own ChatGPT-style UI with free OSS models or paid keys of your choice.
 
 ## 🚀 Quick Start
 
@@ -42,17 +42,23 @@ InnovativeHypeChat is a customized AI chat application based on LibreChat, focus
 
 4. **Start the application**
    ```bash
-   docker compose up -d
-   ```
+    docker compose up -d
+    ```
 
 5. **Download Ollama models for RAG**
    ```bash
-   ./setup-ollama-models.sh
-   ```
+    ./setup-ollama-models.sh
+    ```
 
 6. **Access the application**
    
-   Open your browser and navigate to [http://localhost:3080](http://localhost:3080)
+Open your browser and navigate to [http://localhost:3080](http://localhost:3080)
+
+## How to rebrand
+
+```bash
+./rebrand.sh "YourBrand" "#FF6600"
+```
 
 ## 🌟 Features
 
@@ -108,6 +114,18 @@ InnovativeHypeChat is based on LibreChat and inherits all of its amazing feature
   - Multi-User, Secure Authentication with OAuth2, LDAP, & Email Login Support
 
 For a complete list of features, visit the [LibreChat documentation](https://docs.librechat.ai/).
+
+## Together AI
+
+Set the following variables in your `.env` to enable Together models and Code Interpreter:
+
+```bash
+TOGETHER_API_KEY=your_key
+TOGETHER_CHAT_MODEL=meta-llama/Llama-3-70b-chat-hf
+TOGETHER_EMBEDDING_MODEL=togethercomputer/m2-bert-80M-8k-retrieval
+TOGETHER_CODE_INTERPRETER_IMAGE=python:3.11
+VECTOR_PROVIDER=together
+```
 
 <p align="center">
   <a href="https://discord.librechat.ai"> 
